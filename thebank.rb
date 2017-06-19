@@ -61,7 +61,7 @@ def create_account
 	new_account = Account.new(name, account_number, balance)
 	@accounts.push(new_account)
 	puts "You account has been created: "
-	puts "#{new_account.name}, Account No: #{new_account.account_number}, $#{new_account.balance}"
+	puts "#{new_account.name}, Account No: #{new_account.account_number}, $#{'%.2f' % new_account.balance}"
 	puts "\n"
 
 end	
@@ -87,7 +87,7 @@ def account_login
 	
 	if found == true	
 		puts "Your account has been found!"
-		view_account(name,account_number, balance)
+		view_account(name,account_number)
 
 
 	else	
@@ -105,7 +105,7 @@ def account_login
 end	
 
 
-def view_account(name, account, balance)
+def view_account(name, account)
 	puts "\n"
 	puts "Choose an option"
 	puts "--------------------"
@@ -119,20 +119,20 @@ def view_account(name, account, balance)
 
 	if option == 1
 		check_balance(name,account)
-		view_account(name, account, balance)
+		view_account(name, account)
 
 	elsif option == 2
-		add_deposit(name, account, balance)
-		view_account(name, account, balance)
+		add_deposit(name, account)
+		view_account(name, account)
 
 	elsif option == 3
-		withdraw_funds(name, account,balance)
-		view_account(name, account, balance)
+		withdraw_funds(name, account)
+		view_account(name, account)
 	elsif option == 4
 		main_menu
 	else
 		puts "Invalid entry.  Try again."
-		view_account(name, account, balance)
+		view_account(name, account)
 	end	
 
 end	
@@ -141,13 +141,13 @@ end
 def check_balance(name, account_number)
 	@accounts.each do |a|
 		if a.name == name && a.account_number == account_number
-			puts "Your balance is $#{a.balance}"	
+			puts "Your balance is $#{'%.2f' % a.balance}"	
 		end
 	end	
 
 end
 
-def add_deposit(name, account_number, balance)
+def add_deposit(name, account_number)
 	
 	print "Enter amount you would like to deposit: "
 	amount = gets.chomp.to_f
@@ -155,12 +155,12 @@ def add_deposit(name, account_number, balance)
 	@accounts.each do |a|
 		if a.name == name && a.account_number == account_number
 			a.deposit(amount)
-			puts "Your new balance is $#{a.balance}"	
+			puts "Your new balance is $#{'%.2f' % a.balance}"	
 		end
 	end	
 end
 
-def withdraw_funds(name, account_number, balance)
+def withdraw_funds(name, account_number)
 	puts "Enter amount you want to withdraw: "
 	amount = gets.chomp.to_f
 
@@ -169,7 +169,7 @@ def withdraw_funds(name, account_number, balance)
 			if a.withdraw(amount) == false
 				puts "Insufficient Funds.  Please check your balance and enter a different amount."
 			else
-				puts "You new balance is #{a.balance}"	
+				puts "You new balance is $#{'%.2f' % a.balance}"	
 			end	
 		end	
 	end	
